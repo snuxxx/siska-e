@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id('id');
             $table->string('nama_dokumen');
             $table->string('path_dokumen');
-            $table->foreignId('uploaded_by')->constrained('users_global', 'id');
+            $table->foreignId('uploaded_by')->constrained('employees', 'id');
             $table->timestamp('uploaded_at')->useCurrent();
         });
     }

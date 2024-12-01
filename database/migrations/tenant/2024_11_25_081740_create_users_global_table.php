@@ -13,7 +13,6 @@ return new class extends Migration
             $table->id('id');
             $table->string('email')->unique();
             $table->string('password');
-            $table->foreignId('tenant_id')->nullable()->constrained('tenants', 'id');
             $table->enum('role_global', ['Admin', 'HRD', 'Karyawan'])->default('Karyawan');
             $table->timestamps();
         });

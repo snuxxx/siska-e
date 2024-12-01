@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('audit_logs', function (Blueprint $table) {
             $table->id('id');
-            $table->foreignId('user_id')->constrained('users_global', 'id');
+            $table->foreignId('user_id')->constrained('employees', 'id');
             $table->string('action');
             $table->json('data_sebelum')->nullable();
             $table->json('data_sesudah')->nullable();

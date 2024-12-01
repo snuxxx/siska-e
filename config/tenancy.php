@@ -17,8 +17,9 @@ return [
      * Only relevant if you're using the domain or subdomain identification middleware.
      */
     'central_domains' => [
-        env('APP_CENTRAL_DOMAIN')
-    ],
+    env('APP_CENTRAL_DOMAIN')
+],
+
 
     /**
      * Tenancy bootstrappers are executed when tenancy is initialized.
@@ -50,7 +51,7 @@ return [
          * Tenant database names are created like this:
          * prefix + tenant_id + suffix.
          */
-        'prefix' => 'tenant',
+        'prefix' => 'tenant_',
         'suffix' => '',
 
         /**

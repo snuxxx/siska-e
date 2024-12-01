@@ -14,13 +14,8 @@ class UserGlobal extends Model
     protected $fillable = [
         'email',
         'password',
-        'tenant_id',
         'role_global',
     ];
 
-    public function tenant()
-    {
-        return $this->belongsTo(Tenant::class, 'tenant_id', 'id');
-    }
 }
 

@@ -10,7 +10,7 @@ class UserGlobalController extends Controller
 {
     public function index()
     {
-        return response()->json(UserGlobal::with('tenant')->get());
+        return response()->json(UserGlobal::all(), 200);
     }
 
     public function store(Request $request)
@@ -18,14 +18,12 @@ class UserGlobalController extends Controller
         $request->validate([
             'email' => 'required|email|unique:users_global,email',
             'password' => 'required|string|min:6',
-            'tenant_id' => 'nullable|exists:tenants,id',
             'role_global' => 'in:Admin,HRD,Karyawan',
         ]);
 
         $user = UserGlobal::create([
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'tenant_id' => $request->tenant_id,
             'role_global' => $request->role_global ?? 'Karyawan',
         ]);
 
@@ -34,7 +32,7 @@ class UserGlobalController extends Controller
 
     public function show($id)
     {
-        $user = UserGlobal::with('tenant')->find($id);
+        $user = UserGlobal::all()->find($id);
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }

@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Stancl\Tenancy\Database\Models\Tenant;
+
 
 class User extends Authenticatable
 {
@@ -21,7 +23,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'domain'
     ];
 
     /**
@@ -47,10 +48,6 @@ class User extends Authenticatable
         ];
     }
 
-    public static function boot(){
-        static::create(function($user, $tenant){
-            $userTenant = Tenant::create(['id' => $user->id]);
-            $userTenant->domains()->create(['domain' => $user->domain . '.' . env('APP_CENTRAL_DOMAIN')]);
-        });
-    }
+    
+
 }

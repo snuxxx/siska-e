@@ -16,11 +16,15 @@ class CreateDomainsTable extends Migration
     public function up(): void
     {
         Schema::create('domains', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('domain', 255)->unique();
-            $table->string('tenant_id');
+            $table->increments('id'); // Kolom auto-increment utama
+            $table->string('domain', 255)->unique(); // Domain unik
+            $table->string('tenant_id'); // Relasi ke kolom 'id' di tabel tenants
             $table->timestamps();
-            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
+
+            // Definisi foreign key
+            $table->foreign('tenant_id')->references('id')->on('tenants')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 
