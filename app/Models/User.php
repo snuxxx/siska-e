@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'domain'
     ];
 
     /**
@@ -44,5 +45,12 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public static function boot(){
+        static::create(function($user, $tenant){
+            $userTenant = Tenant::create(['id' => $user->id]);
+            $userTenant->domains()->create(['domain' => $user->domain . '.' . env('APP_CENTRAL_DOMAIN')]);
+        });
     }
 }
