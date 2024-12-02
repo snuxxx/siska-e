@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use App\Notifications\ShiftRequestNotification;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Log;
-use App\Models\LeaveRequest;
 
 
 class ShiftRequestController extends Controller
@@ -47,7 +46,7 @@ class ShiftRequestController extends Controller
     Notification::send($requestedTo, new ShiftRequestNotification($shiftRequest));
 
     // Kirim notifikasi ke HRD
-    $hrd = Employee::where('role', 'HRD')->first(); // asumsikan HRD memiliki role khusus
+    $hrd = Employee::where('jabatan', 'HRD')->first(); // asumsikan HRD memiliki role khusus
     if ($hrd) {
         Notification::send($hrd, new ShiftRequestNotification($shiftRequest));
     }
@@ -63,9 +62,9 @@ class ShiftRequestController extends Controller
 
     public function update(Request $request, $id)
 {
-    $leaveRequest = LeaveRequest::find($id);
+    $ShiftRequest = ShiftRequest::find($id);
 
-    if (!$leaveRequest) {
+    if (!$ShiftRequest) {
         return response()->json([
             'success' => false,
             'message' => 'Pengajuan cuti tidak ditemukan.',
@@ -76,27 +75,27 @@ class ShiftRequestController extends Controller
         'status' => 'required|in:Menunggu,Disetujui,Ditolak,Persetujuan Sementara',
     ]);
 
-    $leaveRequest->update($validated);
+    $ShiftRequest->update($validated);
 
     return response()->json([
         'success' => true,
         'message' => 'Status pengajuan berhasil diperbarui.',
-        'data' => $leaveRequest,
+        'data' => $ShiftRequest,
     ]);
 }
 
 public function destroy($id)
 {
-    $leaveRequest = LeaveRequest::find($id);
+    $ShiftRequest = ShiftRequest::find($id);
 
-    if (!$leaveRequest) {
+    if (!$ShiftRequest) {
         return response()->json([
             'success' => false,
             'message' => 'Pengajuan cuti tidak ditemukan.',
         ], 404);
     }
 
-    $leaveRequest->delete();
+    $ShiftRequest->delete();
 
     return response()->json([
         'success' => true,

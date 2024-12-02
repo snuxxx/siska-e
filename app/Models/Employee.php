@@ -41,5 +41,9 @@ class Employee extends Model
     return $this->hasMany(Employee::class, 'id');
 }
 
+public function officeLocation()
+    {
+        return $this->hasOne(OfficeLocation::class);
+    }
 
 }
